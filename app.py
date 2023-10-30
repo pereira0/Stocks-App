@@ -29,9 +29,26 @@ app.layout = html.Div([
                 {
                     'if': {'column_id': 'name'},
                     'textAlign': 'left'
-                }
-        ]
+                },
+                {
+                    'if': {'column_id': 'code'},
+                    'textAlign': 'center'
+                },
+
+        ],
+        style_header_conditional=[
+                    {
+                        'if': {'column_id': 'name'},
+                        'textAlign': 'left'
+                    },
+                    {
+                    'if': {'column_id': 'code'},
+                    'textAlign': 'center'
+                    },
+                ]
     ),
+
+    # STOCK CHART DELETE
     dcc.Graph(id='example-graph',
               figure={
                   'data': [
