@@ -3,11 +3,18 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import webbrowser
+# get other local files
+import data_cleanup
+import variables
+
+# get data
+sales_prediction = data_cleanup.sales_prediction
 
 app = dash.Dash(__name__)
 
 app.layout = html.Div([
-    html.H1("Dashboard"),
+    html.H1("Stock Tracker"),
+    dash.dash_table.DataTable(sales_prediction.to_dict('records'), [{"name": i, "id": i} for i in sales_prediction.columns]),
     dcc.Graph(id='example-graph',
               figure={
                   'data': [
