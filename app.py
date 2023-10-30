@@ -13,7 +13,25 @@ app = dash.Dash(__name__)
 
 app.layout = html.Div([
     html.H1("Stock Tracker"),
-    dash.dash_table.DataTable(sales_prediction.to_dict('records'), [{"name": i, "id": i} for i in sales_prediction.columns]),
+    dash.dash_table.DataTable(
+        data=sales_prediction.to_dict('records'),
+        columns=[{"name": i, "id": i} for i in sales_prediction.columns],
+        style_table={'overflowX': 'auto'},
+        style_data_conditional=[
+                {
+                    'if': {
+                        'filter_query': '{ratio} <= 0',
+                        'column_id': 'ratio'
+                    },
+                    'backgroundColor': 'tomato',
+                    'color': 'white'
+                },
+                {
+                    'if': {'column_id': 'name'},
+                    'textAlign': 'left'
+                }
+        ]
+    ),
     dcc.Graph(id='example-graph',
               figure={
                   'data': [
