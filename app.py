@@ -20,7 +20,7 @@ app.layout = html.Div([
         style_data_conditional=[
                 {
                     'if': {
-                        'filter_query': '{ratio} <= 0',
+                        'filter_query': '{ratio} <= 1',
                         'column_id': 'ratio'
                     },
                     'backgroundColor': 'tomato',
