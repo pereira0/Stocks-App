@@ -5,7 +5,6 @@ import dash_html_components as html
 import webbrowser
 # get other local files
 import data_cleanup
-import variables
 
 # get data
 sales_prediction = data_cleanup.sales_prediction

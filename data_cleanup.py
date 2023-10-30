@@ -1,7 +1,6 @@
 # IMPORTS
 import pandas as pd
-import numpy as np
-from datetime import timedelta, datetime, date
+from datetime import date
 from dateutil.relativedelta import relativedelta
 import variables
 
