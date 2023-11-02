@@ -1,6 +1,5 @@
 # app.py
 import dash
-import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
 import webbrowser
@@ -11,7 +10,7 @@ import tables
 # get data
 sales_prediction = data_cleanup.sales_prediction
 
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.FLATLY])
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.MATERIA])
 
 app.layout = dbc.Container(
     [
