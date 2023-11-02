@@ -31,6 +31,8 @@ def style_data_conditional_formatting(sales_prediction):
             'if': {'column_id': 'stock'},
             'backgroundColor': '#FFFFDD'
         },
+        {'if': {'column_id': 'name'},
+         'width': '10%'},
 
     ]
 
@@ -57,7 +59,8 @@ def get_main_stock_table(sales_prediction):
     table = dash.dash_table.DataTable(
                 data=sales_prediction.to_dict('records'),
                 columns=[{"name": i, "id": i} for i in sales_prediction.columns],
-                style_table={'overflowX': 'auto'},
+                fixed_rows={'headers': True},
+                style_table={'overflowX': 'auto','height': '500px', 'overflowY': 'auto','fontSize':15},
                 style_data_conditional=style_data_conditional_list,
 
                 style_header_conditional=[
@@ -69,7 +72,8 @@ def get_main_stock_table(sales_prediction):
                             'if': {'column_id': 'code'},
                             'textAlign': 'center'
                             },
-                        ]
+                        ],
+                page_action='none',
             )
 
     return table
