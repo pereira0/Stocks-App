@@ -6,6 +6,7 @@ import webbrowser
 # get other local files
 import data_cleanup
 import tables
+import navbar
 
 # get data
 sales_prediction = data_cleanup.sales_prediction
@@ -14,6 +15,7 @@ app = dash.Dash(__name__, external_stylesheets=[dbc.themes.MATERIA])
 
 app.layout = dbc.Container(
     [
+        navbar.navbar,
         dbc.Row(dbc.Col(html.H1("Stock Tracker"))),
         dbc.Row(dbc.Col(tables.get_main_stock_table(sales_prediction))),
     ]
