@@ -2,14 +2,19 @@ import dash
 
 
 def style_data_conditional_formatting(sales_prediction):
-    formatting_list = [{
-        'if': {
-            'filter_query': '{ratio} <= 1',
-            'column_id': 'ratio'
+    formatting_list = [
+        {
+            'if': {'column_id': 'ratio'},
+            'backgroundColor': '#FFFFDD'
         },
-        'backgroundColor': 'tomato',
-        'color': 'white'
-    },
+        {
+            'if': {
+                'filter_query': '{ratio} <= 1',
+                'column_id': 'ratio'
+            },
+            'backgroundColor': 'tomato',
+            'color': 'white'
+        },
         {
             'if': {'column_id': 'name'},
             'textAlign': 'left'
@@ -17,7 +22,17 @@ def style_data_conditional_formatting(sales_prediction):
         {
             'if': {'column_id': 'code'},
             'textAlign': 'center'
-        }]
+        },
+        {
+            'if': {'column_id': 'sales'},
+            'backgroundColor': '#FFFFDD'
+        },
+        {
+            'if': {'column_id': 'stock'},
+            'backgroundColor': '#FFFFDD'
+        },
+
+    ]
 
     # create list of dates on the table
     col_list = []
