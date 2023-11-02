@@ -5,6 +5,7 @@ import dash_html_components as html
 import webbrowser
 # get other local files
 import data_cleanup
+import tables
 
 # get data
 sales_prediction = data_cleanup.sales_prediction
@@ -13,40 +14,7 @@ app = dash.Dash(__name__)
 
 app.layout = html.Div([
     html.H1("Stock Tracker"),
-    dash.dash_table.DataTable(
-        data=sales_prediction.to_dict('records'),
-        columns=[{"name": i, "id": i} for i in sales_prediction.columns],
-        style_table={'overflowX': 'auto'},
-        style_data_conditional=[
-                {
-                    'if': {
-                        'filter_query': '{ratio} <= 1',
-                        'column_id': 'ratio'
-                    },
-                    'backgroundColor': 'tomato',
-                    'color': 'white'
-                },
-                {
-                    'if': {'column_id': 'name'},
-                    'textAlign': 'left'
-                },
-                {
-                    'if': {'column_id': 'code'},
-                    'textAlign': 'center'
-                },
-
-        ],
-        style_header_conditional=[
-                    {
-                        'if': {'column_id': 'name'},
-                        'textAlign': 'left'
-                    },
-                    {
-                    'if': {'column_id': 'code'},
-                    'textAlign': 'center'
-                    },
-                ]
-    ),
+    tables.get_main_stock_table(sales_prediction),
 
     # STOCK CHART DELETE
     dcc.Graph(id='example-graph',
