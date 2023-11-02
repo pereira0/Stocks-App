@@ -10,13 +10,12 @@ stock_file = variables.stock_file
 
 
 # LOCAL VARIABLES
-date_format = '%y/%-m'
+date_format = '%y/%m'
 predict_month = variables.predict_month
 start_date = date.today() - relativedelta(years=1)
 end_date = start_date + relativedelta(months=predict_month + 1) - relativedelta(days=1)
-date_start_txt = start_date.strftime('%Y-%m')
-date_end_txt = end_date.strftime('%Y-%m')
-
+date_start_txt = start_date.strftime(date_format)
+date_end_txt = end_date.strftime(date_format)
 
 # FUNCTIONS
 # cleanup sales data
@@ -44,7 +43,7 @@ def cleanup_sales_data(sales_file_d, start_date_d, end_date_d, predict_month):
     name_of_col_f = 'sales_' + str(predict_month) + '_months'
 
     # sum all columns except the current months sales
-    sales_data[name_of_col_f] = sales_data[[col for col in sales_data.columns if (col.startswith('20'))]].sum(axis=1)
+    sales_data[name_of_col_f] = sales_data[[col for col in sales_data.columns if (col.startswith('2'))]].sum(axis=1)
 
     return sales_data, name_of_col_f
 
@@ -77,8 +76,9 @@ def merge_stocks_sales(sales_data, stocks_file, name_of_col):
 def sales_predictions(final_df_d, date_start_txt, predict_month_d):
     # create prediction for end of current month
     try:
-        final_df_d[(date.today().strftime(date_format) + 'e')] = final_df_d[date.today().strftime(date_format)] + final_df_d[
-            date_start_txt]
+        final_df_d[(date.today().strftime(date_format) + 'e')] = final_df_d[date.today().strftime(date_format)] + \
+                                                                 final_df_d[
+                                                                     date_start_txt]
     except:
         try:
             final_df_d[(date.today().strftime(date_format) + 'e')] = final_df_d[date.today().strftime(date_format)]
@@ -101,7 +101,8 @@ def sales_predictions(final_df_d, date_start_txt, predict_month_d):
         final_df_d = final_df_d.rename(columns={(date_start_txt + 'e'): date_start_txt})
 
     # start creating stock prediction
-    final_df_d[(date.today().strftime(date_format) + 'e')] = final_df_d['stock'] - final_df_d[(date.today().strftime(date_format) + 'e')]
+    final_df_d[(date.today().strftime(date_format) + 'e')] = final_df_d['stock'] - final_df_d[
+        (date.today().strftime(date_format) + 'e')]
 
     # create month variables
     date_month_pred = date.today().replace(day=1) + relativedelta(months=1)
@@ -123,14 +124,19 @@ def sales_predictions(final_df_d, date_start_txt, predict_month_d):
     final_df_d = final_df_d[['design_y'] + [col for col in final_df_d.columns if col != 'design_y']]
     final_df_d = final_df_d[['ref'] + [col for col in final_df_d.columns if col != 'ref']]
 
+    # create list of dates on the table
+    col_list = []
+    for col in sales_data.columns:
+        if ("2" in col) & ("e" not in col):
+            col_list.append(col)
+
     # Drop historical sales months
-    final_df_d = final_df_d.drop(final_df_d.columns[[2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]], axis=1)
+    final_df_d = final_df_d.drop(col_list, axis=1)
 
     # rename columns
     final_df_d = final_df_d.rename(columns={"design_y": "name", "sales_12_months": "sales", "ref": "code"})
 
     return final_df_d
-
 
 # RUN CODE
 sales_data, name_of_col = cleanup_sales_data(sales_file, start_date, end_date, predict_month)
