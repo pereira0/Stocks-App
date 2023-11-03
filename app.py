@@ -1,5 +1,6 @@
 # app.py
 import dash
+from dash import Output, Input
 import dash_html_components as html
 import dash_bootstrap_components as dbc
 import webbrowser
@@ -46,6 +47,8 @@ app.layout = dbc.Container(
             dbc.Col(stockout_ref_count_card)
         ]),
 
+        dbc.Row([dbc.Col(html.H2("Selected Supplier", id="selected-supplier"))]),
+
         dbc.Row([dbc.Col(html.H2("Inventory Tracker"))]),
 
         dbc.Row(dbc.Col(tables.get_main_stock_table(sales_prediction))),
@@ -59,11 +62,24 @@ app.layout = dbc.Container(
     style={'padding': '1rem'}
 )
 
+
+
+
 # Define the URL for your Dash app
 url = 'http://127.0.0.1:8050/'
 
 # Automatically open the web browser to the specified URL
 webbrowser.open_new(url)
+
+
+# CALLBACKS
+@app.callback(
+    Output("selected-supplier", "children"),
+    Input("dropdown-button", "value")
+)
+def update_name(name):
+    return name
+
 
 if __name__ == '__main__':
     app.run_server(debug=False)

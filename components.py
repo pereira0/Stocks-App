@@ -1,21 +1,29 @@
 import dash_bootstrap_components as dbc
 import dash_html_components as html
+from dash import dcc
+
 import data_cleanup
 
 
 # supplier dropdown
 def create_dropdown_supplier_selector(list_of_suppliers_d):
-    children_list = []
-    for i in list_of_suppliers_d:
-        children_list.append(dbc.DropdownMenuItem(i))
 
-    dropdown = dbc.DropdownMenu(
-        label="Suppliers",
-        menu_variant="dark",
-        children=children_list,
-        className="d-grid gap-2 d-md-flex justify-content-md-end",
-        align_end=True
-    )
+    # children_list = []
+    # for i in list_of_suppliers_d:
+    #     children_list.append(dbc.DropdownMenuItem(i))
+
+
+    # dropdown = dbc.DropdownMenu(
+    #     label="Suppliers",
+    #     menu_variant="dark",
+    #     children=children_list,
+    #     className="d-grid gap-2 d-md-flex justify-content-md-end",
+    #     align_end=True,
+    #     id='dropdown-button'
+    # )
+
+    # testing different dropdown
+    dropdown = dcc.Dropdown(list_of_suppliers_d, list_of_suppliers_d[0], id='dropdown-button')
 
     return dropdown
 
