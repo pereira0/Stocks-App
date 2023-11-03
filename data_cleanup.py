@@ -19,7 +19,7 @@ date_end_txt = end_date.strftime(date_format)
 
 # FUNCTIONS
 # cleanup sales data
-def cleanup_sales_data(sales_file_d, start_date_d, end_date_d, predict_month_f):
+def cleanup_sales_data(sales_file_d, start_date_d, end_date_d, predict_month):
     # change type of date column
     sales_file_d['datatempo'] = pd.to_datetime(sales_file_d['datatempo']).dt.date
 
@@ -29,24 +29,31 @@ def cleanup_sales_data(sales_file_d, start_date_d, end_date_d, predict_month_f):
     # create marker for year and month only
     sales_file_d['dateF'] = sales_file_d.apply(lambda x: x['datatempo'].strftime(date_format), axis=1)
 
+    # total sales
+    sales_file_d['total'] = sales_file_d['qtt'] * sales_file_d['unit_price']
+
+    return sales_file_d
+
+
+# prep cleaned sales data for main table
+def prep_data_for_main_table(sales_file_d, predict_month):
     # only carry necessary cols
     sales_file_d = sales_file_d[['dateF', 'ref', 'design', 'qtt']]
 
     # create pivot table
-    sales_data_d = sales_file_d.pivot_table(index=['ref', 'design'], columns='dateF', values='qtt',
-                                            aggfunc='sum').reset_index().rename_axis(None, axis=1)
+    sales_data = sales_file_d.pivot_table(index=['ref', 'design'], columns='dateF', values='qtt',
+                                          aggfunc='sum').reset_index().rename_axis(None, axis=1)
 
     # turn NaN to 0
-    sales_data_d.loc[:, :] = sales_data_d.loc[:, :].fillna(0)
+    sales_data.loc[:, :] = sales_data.loc[:, :].fillna(0)
 
     # calculate time period sales
-    name_of_col_f = 'sales_' + str(predict_month_f) + '_months'
+    name_of_col_f = 'sales_' + str(predict_month) + '_months'
 
     # sum all columns except the current months sales
-    sales_data_d[name_of_col_f] = sales_data_d[[col for col in sales_data_d.columns if (col.startswith('2'))]].sum(
-        axis=1)
+    sales_data[name_of_col_f] = sales_data[[col for col in sales_data.columns if (col.startswith('2'))]].sum(axis=1)
 
-    return sales_data_d, name_of_col_f
+    return sales_data, name_of_col_f
 
 
 # merge stocks with sales
@@ -140,7 +147,38 @@ def sales_predictions(final_df_d, date_start_txt_d, predict_month_d):
     return final_df_d
 
 
-# # RUN CODE
-sales_data, name_of_col = cleanup_sales_data(sales_file, start_date, end_date, predict_month)
+# get main indicators
+def main_indicators(stock_file_d, clean_sales_df, display_df_d):
+    # get total stocks
+    stock_file_d['total'] = stock_file_d['stock'] * stock_file_d['unit_price']
+    current_stocks_d = stock_file_d['total'].sum()
+    current_stocks_string = "{:,.0f}€".format(current_stocks_d).replace(',', '.')
+
+    # get sales for the period
+    total_sales_d = clean_sales_df['total'].sum()
+    total_sales_string = "{:,.0f}€".format(total_sales_d).replace(',', '.')
+
+    # ratio
+    stock_ratio_d = current_stocks_d / total_sales_d
+    stock_ratio_string = "{:.2f}".format(stock_ratio_d)
+
+    # total number of codes sold in period
+    unique_sales_refs_d = clean_sales_df['ref'].nunique()
+
+    # total number of codes in inventory
+    unique_stock_refs_d = stock_file_d['ref'].nunique()
+
+    # refs that will go out of stock in the time period
+    stockout_ref_count_d = sum(display_df_d.ratio < 1)
+
+    return current_stocks_string, total_sales_string, stock_ratio_string, \
+           unique_sales_refs_d, unique_stock_refs_d, stockout_ref_count_d
+
+
+# RUN CODE
+sales_file_cleaned = cleanup_sales_data(sales_file, start_date, end_date, predict_month)
+sales_data, name_of_col = prep_data_for_main_table(sales_file_cleaned, predict_month)
 merged_stocks_sales = merge_stocks_sales(sales_data, stock_file, name_of_col)
 sales_prediction = sales_predictions(merged_stocks_sales, date_start_txt, predict_month)
+current_stocks, total_sales, stock_ratio, unique_sales_refs, unique_stock_refs, stockout_ref_count = main_indicators(
+    stock_file, sales_file_cleaned, sales_prediction)

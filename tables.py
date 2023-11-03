@@ -50,6 +50,7 @@ def get_main_stock_table(sales_prediction):
             {'if': {'column_id': 'name'}, 'textAlign': 'left'},
             {'if': {'column_id': 'code'}, 'textAlign': 'center'}],
         page_action='none',
+        export_format='xlsx'
     )
 
     return table

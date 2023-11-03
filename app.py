@@ -6,19 +6,34 @@ import webbrowser
 # get other local files
 import data_cleanup
 import tables
-import navbar
+# import navbar
+import components
 
 # get data
 sales_prediction = data_cleanup.sales_prediction
+current_stocks_card, period_sales_card = components.create_display_cards(data_cleanup.stock_file, data_cleanup.total_sales)
 
+# initialize dash app
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.MATERIA])
 
+# setup layout for app
 app.layout = dbc.Container(
     [
-        navbar.navbar,
-        dbc.Row(dbc.Col(html.H1("Stock Tracker"))),
+        # navbar unecessary at this point
+        # navbar.navbar,
+
+        dbc.Row(
+            [dbc.Col(html.H1("Stock Tracker")),
+             dbc.Col(components.dropdown)]),
+
+        dbc.Row([
+            dbc.Col(current_stocks_card),
+            dbc.Col(period_sales_card)
+        ]),
+
         dbc.Row(dbc.Col(tables.get_main_stock_table(sales_prediction))),
-    ]
+    ],
+    style={'padding': '1rem'}
 )
 
 # Define the URL for your Dash app
