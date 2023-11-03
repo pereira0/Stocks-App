@@ -11,10 +11,14 @@ import components
 
 # get data
 sales_prediction = data_cleanup.sales_prediction
-current_stocks_card, period_sales_card, stock_ratio_card = components.create_display_cards(data_cleanup.current_stocks,
-                                                                                           data_cleanup.total_sales,
-                                                                                           data_cleanup.stock_ratio)
-
+# get top cards
+current_stocks_card, period_sales_card, stock_ratio_card, unique_stock_refs_card, \
+unique_sales_refs_card, stockout_ref_count_card = \
+    components.create_display_cards(data_cleanup.current_stocks,data_cleanup.total_sales, data_cleanup.stock_ratio,
+                                    data_cleanup.unique_stock_refs, data_cleanup.unique_sales_refs,
+                                    data_cleanup.stockout_ref_count)
+# get dropdown
+dropdown_select = components.create_dropdown_supplier_selector(data_cleanup.list_of_suppliers)
 
 
 # initialize dash app
@@ -28,7 +32,7 @@ app.layout = dbc.Container(
 
         dbc.Row(
             [dbc.Col(html.H1("Stock Tracker")),
-             dbc.Col(components.dropdown)]),
+             dbc.Col(dropdown_select)]),
 
         dbc.Row([
             dbc.Col(current_stocks_card),
@@ -36,7 +40,21 @@ app.layout = dbc.Container(
             dbc.Col(stock_ratio_card)
         ]),
 
+        dbc.Row([
+            dbc.Col(unique_stock_refs_card),
+            dbc.Col(unique_sales_refs_card),
+            dbc.Col(stockout_ref_count_card)
+        ]),
+
+        dbc.Row([dbc.Col(html.H2("Inventory Tracker"))]),
+
         dbc.Row(dbc.Col(tables.get_main_stock_table(sales_prediction))),
+
+        dbc.Row([dbc.Col(html.H2("Products in inventory without sales"))]),
+
+        dbc.Row(dbc.Col(tables.stock_without_sales_table(data_cleanup.stocks_without_sales))),
+
+
     ],
     style={'padding': '1rem'}
 )

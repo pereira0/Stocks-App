@@ -175,6 +175,32 @@ def main_indicators(stock_file_d, clean_sales_df, display_df_d):
            unique_sales_refs_d, unique_stock_refs_d, stockout_ref_count_d
 
 
+# get a df with the products that didn't get any sales
+def get_stocks_without_sales(sales_data_d, stock_file_d):
+    stock_file_d = stock_file_d[['ref', 'design', 'stock']]
+
+    # join sales table with stocks
+    sales_data_d['ref'] = sales_data_d['ref'].apply(lambda x: x.strip())
+    stock_file_d['ref'] = stock_file_d['ref'].apply(lambda x: x.strip())
+    final_df_d = pd.merge(sales_data_d, stock_file_d, on='ref', how='right')
+    # get only nan
+    final_df_d = final_df_d[final_df_d['design_x'].isna()]
+    # get only specific columns
+    final_df_d = final_df_d[['ref', 'design_y', 'stock']]
+    # get only stock bigger than 0
+    final_df_d = final_df_d[(final_df_d['stock'] > 0)]
+    # rename columns
+    final_df_d = final_df_d.rename(columns={"design_y": "name", "ref": "code"})
+
+    return final_df_d
+
+
+# get a list of all suppliers
+def get_list_of_suppliers(stock_file_d):
+    list_of_suppliers_d = stock_file_d['suppliers'].unique()
+    return list_of_suppliers_d.tolist()
+
+
 # RUN CODE
 sales_file_cleaned = cleanup_sales_data(sales_file, start_date, end_date, predict_month)
 sales_data, name_of_col = prep_data_for_main_table(sales_file_cleaned, predict_month)
@@ -182,3 +208,5 @@ merged_stocks_sales = merge_stocks_sales(sales_data, stock_file, name_of_col)
 sales_prediction = sales_predictions(merged_stocks_sales, date_start_txt, predict_month)
 current_stocks, total_sales, stock_ratio, unique_sales_refs, unique_stock_refs, stockout_ref_count = main_indicators(
     stock_file, sales_file_cleaned, sales_prediction)
+stocks_without_sales = get_stocks_without_sales(sales_data, stock_file)
+list_of_suppliers = get_list_of_suppliers(stock_file)

@@ -1,6 +1,6 @@
 import dash
 
-
+# conditional formatting for main data
 def style_data_conditional_formatting(sales_prediction):
     # conditional formatting for main table that is the same for every selection
     formatting_list = [
@@ -25,7 +25,7 @@ def style_data_conditional_formatting(sales_prediction):
 
     return formatting_list
 
-
+# main table with stock predictions
 def get_main_stock_table(sales_prediction):
     # fetch conditional data from another function
     style_data_conditional_list = style_data_conditional_formatting(sales_prediction)
@@ -50,7 +50,24 @@ def get_main_stock_table(sales_prediction):
             {'if': {'column_id': 'name'}, 'textAlign': 'left'},
             {'if': {'column_id': 'code'}, 'textAlign': 'center'}],
         page_action='none',
-        export_format='xlsx'
     )
 
     return table
+
+
+# create table for stocks without sales
+def stock_without_sales_table(stocks_without_sales_d):
+    table = dash.dash_table.DataTable(
+            data=stocks_without_sales_d.to_dict('records'),
+            columns=[{"name": i, "id": i} for i in stocks_without_sales_d.columns],
+            merge_duplicate_headers=True,  # remove duplicates from top row
+            fixed_rows={'headers': True},
+            style_table={'overflowX': 'auto', 'height': '500px', 'overflowY': 'auto', 'fontSize': 15},
+            style_header_conditional=[
+                {'if': {'column_id': 'name'}, 'textAlign': 'left'},
+                {'if': {'column_id': 'code'}, 'textAlign': 'center'}],
+            page_action='none',
+        )
+
+    return table
+
