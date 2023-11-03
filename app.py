@@ -11,7 +11,11 @@ import components
 
 # get data
 sales_prediction = data_cleanup.sales_prediction
-current_stocks_card, period_sales_card = components.create_display_cards(data_cleanup.stock_file, data_cleanup.total_sales)
+current_stocks_card, period_sales_card, stock_ratio_card = components.create_display_cards(data_cleanup.current_stocks,
+                                                                                           data_cleanup.total_sales,
+                                                                                           data_cleanup.stock_ratio)
+
+
 
 # initialize dash app
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.MATERIA])
@@ -28,7 +32,8 @@ app.layout = dbc.Container(
 
         dbc.Row([
             dbc.Col(current_stocks_card),
-            dbc.Col(period_sales_card)
+            dbc.Col(period_sales_card),
+            dbc.Col(stock_ratio_card)
         ]),
 
         dbc.Row(dbc.Col(tables.get_main_stock_table(sales_prediction))),

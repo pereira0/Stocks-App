@@ -16,7 +16,7 @@ dropdown = dbc.DropdownMenu(
 
 
 # CARDS
-def create_display_cards(current_stocks_d, period_sales_d):
+def create_display_cards(current_stocks_d, period_sales_d, stock_ratio_d):
     current_stocks_card = dbc.Card(
             dbc.CardBody(
                 [
@@ -24,17 +24,24 @@ def create_display_cards(current_stocks_d, period_sales_d):
                     html.H6("Current stocks", className="card-subtitle"),
                 ]
             ),
-            style={"width": "18rem"},
         )
 
     period_sales_card = dbc.Card(
         dbc.CardBody(
-            [
-                html.H4(period_sales_d, className="card-title"),
-                html.H6("Period sales", className="card-subtitle"),
-            ]
-        ),
-        style={"width": "18rem"},
-    )
+                [
+                    html.H4(period_sales_d, className="card-title"),
+                    html.H6("Period sales", className="card-subtitle"),
+                ]
+            ),
+        )
 
-    return current_stocks_card, period_sales_card
+    stock_ratio_card = dbc.Card(
+        dbc.CardBody(
+                [
+                    html.H4(stock_ratio_d, className="card-title"),
+                    html.H6("Stock Ratio", className="card-subtitle"),
+                ]
+            ),
+        )
+
+    return current_stocks_card, period_sales_card, stock_ratio_card
