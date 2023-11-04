@@ -54,7 +54,7 @@ def prep_data_for_main_table(sales_file_d, predict_month_d):
 
 
 # merge stocks with sales
-def merge_stocks_sales(sales_data_d, stock_clean_d, name_of_col_d):
+def merge_stocks_sales(sales_data_d, stock_clean_d, name_of_col_d, start_date_d, date_format_d):
     # join sales table with stocks
     sales_data_d['ref'] = sales_data_d['ref'].apply(lambda x: x.strip())
     stock_clean_d['ref'] = stock_clean_d['ref'].apply(lambda x: x.strip())
@@ -72,8 +72,29 @@ def merge_stocks_sales(sales_data_d, stock_clean_d, name_of_col_d):
     # calculate sales / stock ratio
     merged_stocks_sales_d['ratio'] = (merged_stocks_sales_d['stock'] / merged_stocks_sales_d[name_of_col_d]).round(2)
 
-    return merged_stocks_sales_d
+    # correct for months without sales for selected supplier
+    names = merged_stocks_sales_d.columns
+    first_col = start_date_d.strftime(date_format_d)
+    col_check = [first_col]
+    value = ''
 
+    for i in range(1, 12):
+        year = int(col_check[i - 1][:2])
+        month = int(col_check[i - 1][-2:])
+        if month == 12:
+            value = str(year + 1) + '/01'
+        elif 1 <= month < 9:
+            value = str(year) + '/0' + str(month + 1)
+        else:
+            value = str(year) + '/' + str(month + 1)
+        col_check.append(value)
+
+    cycle = 0
+    for i in col_check:
+        if i not in names:
+            merged_stocks_sales_d[i] = 0
+
+    return merged_stocks_sales_d
 
 # create predictions
 def sales_predictions(final_df_d, date_start_txt_d, predict_month_d, date_format_d):
@@ -202,7 +223,7 @@ def cleanup_full_data(sales_file_d, start_date_d, end_date_d, supplier_d, stock_
     sales_file_cleaned, stock_file_cleaned = cleanup_sales_stock_data(sales_file_d, start_date_d, end_date_d,
                                                                       supplier_d, stock_file_d, date_format_d)
     sales_data, name_of_col = prep_data_for_main_table(sales_file_cleaned, predict_month_d)
-    merged_stocks_sales = merge_stocks_sales(sales_data, stock_file_cleaned, name_of_col)
+    merged_stocks_sales = merge_stocks_sales(sales_data, stock_file_cleaned, name_of_col, start_date_d, date_format_d)
     sales_prediction = sales_predictions(merged_stocks_sales, date_start_txt_d, predict_month_d, date_format_d)
     current_stocks, total_sales, stock_ratio, unique_sales_refs, unique_stock_refs, \
         stockout_ref_count = main_indicators(stock_file_cleaned, sales_file_cleaned, sales_prediction)
