@@ -3,7 +3,6 @@ import dash
 from dash import Output, Input, dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
-import webbrowser
 # get other local files
 import assets.styles
 import data_cleanup
@@ -25,13 +24,18 @@ content = dbc.Container([
             dbc.Col(id='current_stocks_card'),
             dbc.Col(id='period_sales_card'),
             dbc.Col(id='stock_ratio_card')
-        ]),
+            ],
+            style=assets.styles.ROW_CARD_STYLE
+
+        ),
 
         dbc.Row([
             dbc.Col(id='unique_stock_refs_card'),
             dbc.Col(id='unique_sales_refs_card'),
             dbc.Col(id='stockout_ref_count_card')
-        ]),
+            ],
+            style=assets.styles.ROW_CARD_STYLE
+        ),
 
         dbc.Row([dbc.Col(html.H2("Inventory Tracker"))]),
 

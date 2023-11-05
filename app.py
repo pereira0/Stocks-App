@@ -18,7 +18,8 @@ app = dash.Dash(__name__, external_stylesheets=[dbc.themes.MATERIA])
 app.layout = html.Div([
     dcc.Location(id="url"),
     components.sidebar,
-    supplier_stock_tracker.content])
+    supplier_stock_tracker.content],
+    style=assets.styles.PAGE_STYLE)
 
 # Define the URL for your Dash app and open it automatically
 url = 'http://127.0.0.1:8050/'
@@ -59,7 +60,6 @@ def render_page_content(pathname):
     Input("dropdown-button", "value")
 )
 def update_name(supplier_name):
-    print(supplier_name)
     sales_prediction, current_stocks, total_sales, stock_ratio, unique_sales_refs, \
         unique_stock_refs, stockout_ref_count, stocks_without_sales = \
         data_cleanup.cleanup_full_data(variables.sales_file, variables.start_date, variables.end_date,
