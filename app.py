@@ -10,6 +10,7 @@ import tables
 import variables
 import components
 import supplier_stock_tracker
+import overview_page
 
 # initialize dash app
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.MATERIA])
@@ -18,7 +19,9 @@ app = dash.Dash(__name__, external_stylesheets=[dbc.themes.MATERIA])
 app.layout = html.Div([
     dcc.Location(id="url"),
     components.sidebar,
-    supplier_stock_tracker.content],
+    dbc.Container(id='page-content', style=assets.styles.CONTENT_STYLE),
+    # supplier_stock_tracker.content
+    ],
     style=assets.styles.PAGE_STYLE)
 
 # Define the URL for your Dash app and open it automatically
@@ -28,14 +31,16 @@ webbrowser.open_new(url)
 
 # CALLBACKS
 # SIDE  BAR CALLBACK
-@app.callback(Output("page-content", "children"), [Input("url", "pathname")])
+@app.callback(
+    Output("page-content", "children"),
+    Input("url", "pathname"))
 def render_page_content(pathname):
-    if pathname == "/":
-        return html.P("This is the content of the home page!")
-    elif pathname == "/page-1":
-        return html.P("This is the content of page 1. Yay!")
-    elif pathname == "/page-2":
-        return html.P("Oh cool, this is page 2!")
+    if pathname == "/overview":
+        return overview_page.content
+    elif pathname == "/suppliers":
+        return supplier_stock_tracker.content
+    elif pathname == "/":
+        return overview_page.content
     # If the user tries to reach a different page, return a 404 message
     return html.Div(
         [
@@ -56,6 +61,7 @@ def render_page_content(pathname):
     Output("unique_sales_refs_card", "children"),
     Output("stockout_ref_count_card", "children"),
     Output("main_stock_table", "children"),
+    # Output("download_button", "children"),
     Output("table_without_stock", "children"),
     Input("dropdown-button", "value")
 )
@@ -73,10 +79,12 @@ def update_name(supplier_name):
                                         stockout_ref_count)
 
     table_stock = tables.get_main_stock_table(sales_prediction)
+    # download_button = components.generate_download_data(sales_prediction)
     table_stock_out = tables.stock_without_sales_table(stocks_without_sales)
 
     return current_stocks_card, period_sales_card, stock_ratio_card,unique_stock_refs_card, \
            unique_sales_refs_card, stockout_ref_count_card, table_stock, table_stock_out
+           # download_button,\
 
 
 if __name__ == '__main__':

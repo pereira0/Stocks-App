@@ -62,6 +62,7 @@ def merge_stocks_sales(sales_data_d, stock_clean_d, name_of_col_d, start_date_d,
 
     # drop useless columns
     merged_stocks_sales_d = merged_stocks_sales_d.drop(['design_x'], axis=1)
+    merged_stocks_sales_d = merged_stocks_sales_d.drop(['unit_price'], axis=1)
 
     # fill NA
     merged_stocks_sales_d.loc[:, :] = merged_stocks_sales_d.loc[:, :].fillna(0)
@@ -95,6 +96,7 @@ def merge_stocks_sales(sales_data_d, stock_clean_d, name_of_col_d, start_date_d,
             merged_stocks_sales_d[i] = 0
 
     return merged_stocks_sales_d
+
 
 # create predictions
 def sales_predictions(final_df_d, date_start_txt_d, predict_month_d, date_format_d):
@@ -231,7 +233,6 @@ def cleanup_full_data(sales_file_d, start_date_d, end_date_d, supplier_d, stock_
 
     return sales_prediction, current_stocks, total_sales, stock_ratio, unique_sales_refs, \
            unique_stock_refs, stockout_ref_count, stocks_without_sales
-
 
 
 

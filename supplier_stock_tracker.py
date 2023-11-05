@@ -16,9 +16,7 @@ dropdown_select = components.create_dropdown_supplier_selector(list_of_suppliers
 
 content = dbc.Container([
 
-        dbc.Row(
-            [dbc.Col(html.H1("Stock Tracker")),
-             dbc.Col(dropdown_select)]),
+        dbc.Row([dbc.Col(dropdown_select)]),
 
         dbc.Row([
             dbc.Col(id='current_stocks_card'),
@@ -41,6 +39,8 @@ content = dbc.Container([
 
         dbc.Row(dbc.Col(id='main_stock_table')),
 
+        # dbc.Row(dbc.Col(id='download_button')),
+
         dbc.Row([dbc.Col(html.H2("Products in inventory without sales"))]),
 
         dbc.Row(dbc.Col(id='table_without_stock')),
@@ -48,7 +48,7 @@ content = dbc.Container([
 
     ],
 
-    style=assets.styles.CONTENT_STYLE
+    style=assets.styles.SPECIFIC_CONTENT_STYLE
 )
 
 

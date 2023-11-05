@@ -39,20 +39,21 @@ def create_display_cards(current_stocks_d, period_sales_d, stock_ratio_d, unique
 
     return current_stocks_card, period_sales_card, stock_ratio_card, unique_stock_refs_card, unique_sales_refs_card, stockout_ref_count_card
 
+# # generate download button
+# def generate_download_data(sales_prediction_d):
+#     sales_prediction_d.to_excel()
+
 
 # SIDEBAR
 sidebar = html.Div(
     [
-        html.H2("ACROS", style={'color': styles.off_white}),
-        html.Hr(),
+        html.H2("INVENTORY TRACKER", style={'color': styles.off_white}),
         dbc.Nav(
             [
-                dbc.NavLink("STOCK TRACKER", href="/", active="exact"),
-                dbc.NavLink("Page 1", href="/page-1", active="exact"),
-                dbc.NavLink("Page 2", href="/page-2", active="exact"),
+                dbc.NavLink("OVERVIEW", href="/overview"),
+                dbc.NavLink("SUPPLIER LEVEL", href="/suppliers", active=True),
             ],
             vertical=True,
-            pills=True,
         ),
     ],
     style=styles.SIDEBAR_STYLE,

@@ -1,5 +1,21 @@
-.nav-pills .nav-link.active {
-    color: #fff;
-    background-color: orange;
+.nav-link {
+    background-color: transparent;
+    color: #E4E5E7;
+    margin: 0 0 1rem 0;
+}
+
+.nav-link:active,
+.nav-link:focus {
+    color: #79FCF5;
     border-left: solid #79FCF5;
+}
+
+.nav-link:hover {
+    color: #79FCF5;
+    border-left: solid #79FCF5;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+    color: #9B9FAC;
 }

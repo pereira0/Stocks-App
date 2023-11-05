@@ -1,13 +1,15 @@
 import dash
+import assets.styles as st
+
 
 # conditional formatting for main data
 def style_data_conditional_formatting(sales_prediction):
     # conditional formatting for main table that is the same for every selection
     formatting_list = [
-        {'if': {'column_id': 'ratio'}, 'backgroundColor': '#FFFFDD'},
-        {'if': {'column_id': 'sales'}, 'backgroundColor': '#FFFFDD'},
-        {'if': {'column_id': 'stock'}, 'backgroundColor': '#FFFFDD'},
-        {'if': {'filter_query': '{ratio} <= 1', 'column_id': 'ratio'}, 'backgroundColor': 'tomato', 'color': 'white'},
+        {'if': {'column_id': 'ratio'}, 'backgroundColor': st.middle_blue, 'color': st.off_white},
+        {'if': {'column_id': 'sales'}, 'backgroundColor': st.middle_blue, 'color': st.off_white},
+        {'if': {'column_id': 'stock'}, 'backgroundColor': st.middle_blue, 'color': st.off_white},
+        {'if': {'filter_query': '{ratio} <= 1', 'column_id': 'ratio'}, 'backgroundColor': st.dark_blue, 'color': st.off_white},
         {'if': {'column_id': 'name'}, 'textAlign': 'left'}, {'if': {'column_id': 'code'}, 'textAlign': 'center'},
         {'if': {'column_id': 'name'}, 'width': '10%'},
     ]
@@ -24,6 +26,7 @@ def style_data_conditional_formatting(sales_prediction):
             })
 
     return formatting_list
+
 
 # main table with stock predictions
 def get_main_stock_table(sales_prediction):
@@ -42,9 +45,21 @@ def get_main_stock_table(sales_prediction):
         data=sales_prediction.to_dict('records'),
         columns=columns_list,
         merge_duplicate_headers=True,  # remove duplicates from top row
-        filter_action='native',  # create filters
+        # filter_action='native',  # create filters
         fixed_rows={'headers': True},
-        style_table={'overflowX': 'auto', 'height': '500px', 'overflowY': 'auto', 'fontSize': 15},
+        style_table={
+            'overflowX': 'auto',
+            'height': '500px',
+            'overflowY': 'auto',
+            'fontSize': 15},
+        style_header={
+            'backgroundColor': 'transparent',
+            'color': st.proj_grey
+        },
+        style_data={
+            'backgroundColor': 'transparent',
+            'color': st.proj_grey
+        },
         style_data_conditional=style_data_conditional_list,
         style_header_conditional=[
             {'if': {'column_id': 'name'}, 'textAlign': 'left'},
@@ -61,12 +76,24 @@ def stock_without_sales_table(stocks_without_sales_d):
             data=stocks_without_sales_d.to_dict('records'),
             columns=[{"name": i, "id": i} for i in stocks_without_sales_d.columns],
             merge_duplicate_headers=True,  # remove duplicates from top row
+            style_header={
+                'backgroundColor': 'transparent',
+                'color': st.off_white
+            },
+            style_data={
+                'backgroundColor': 'transparent',
+                'color': st.proj_grey
+            },
             fixed_rows={'headers': True},
             style_table={'overflowX': 'auto', 'height': '500px', 'overflowY': 'auto', 'fontSize': 15},
             style_header_conditional=[
                 {'if': {'column_id': 'name'}, 'textAlign': 'left'},
                 {'if': {'column_id': 'code'}, 'textAlign': 'center'}],
+            style_data_conditional=[
+                {'if': {'column_id': 'name'}, 'textAlign': 'left'},
+                {'if': {'column_id': 'code'}, 'textAlign': 'center'}],
             page_action='none',
+            fill_width=False
         )
 
     return table
