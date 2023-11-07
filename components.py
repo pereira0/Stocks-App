@@ -2,6 +2,7 @@ import dash_bootstrap_components as dbc
 import dash_html_components as html
 from dash import dcc
 import assets.styles as styles
+import assets.text_translations as txt
 
 
 # supplier dropdown
@@ -29,18 +30,18 @@ def card_styling(value_d, text_d):
 
 # get cards for supplier stock tracker
 def create_display_cards(current_stocks_d, period_sales_d, stock_ratio_d, unique_stock_refs_d, unique_sales_refs_d, stockout_ref_count_d):
-    current_stocks_card = card_styling(current_stocks_d, "Current Stocks")
-    period_sales_card = card_styling(period_sales_d, "Period Sales")
-    stock_ratio_card = card_styling(stock_ratio_d, "Stock Ratio")
-    unique_stock_refs_card = card_styling(unique_stock_refs_d, "Number of SKUs")
-    unique_sales_refs_card = card_styling(unique_sales_refs_d, "Unique Products Sold")
+    current_stocks_card = card_styling(current_stocks_d, txt.current_stocks)
+    period_sales_card = card_styling(period_sales_d, txt.period_sales)
+    stock_ratio_card = card_styling(stock_ratio_d, txt.stock_ratio)
+    unique_stock_refs_card = card_styling(unique_stock_refs_d, txt.number_of_sku)
+    unique_sales_refs_card = card_styling(unique_sales_refs_d, txt.unique_prod_sold)
     stockout_ref_count_card = card_styling(stockout_ref_count_d, "Stockout Risk Count")
 
     return current_stocks_card, period_sales_card, stock_ratio_card, unique_stock_refs_card, unique_sales_refs_card, stockout_ref_count_card
 
-# # generate download button
-# def generate_download_data(sales_prediction_d):
-#     sales_prediction_d.to_excel()
+
+# download button
+download_button = html.Button('Button 1', id='btn-nclicks-1', n_clicks=0),
 
 
 # SIDEBAR

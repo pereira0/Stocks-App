@@ -1,4 +1,6 @@
 import dash
+
+import assets.styles
 import assets.styles as st
 
 
@@ -6,9 +8,9 @@ import assets.styles as st
 def style_data_conditional_formatting(sales_prediction):
     # conditional formatting for main table that is the same for every selection
     formatting_list = [
-        {'if': {'column_id': 'ratio'}, 'backgroundColor': st.light_blue, 'color': st.proj_white},
-        {'if': {'column_id': 'sales'}, 'backgroundColor': st.light_blue, 'color': st.proj_white},
-        {'if': {'column_id': 'stock'}, 'backgroundColor': st.light_blue, 'color': st.proj_white},
+        {'if': {'column_id': 'ratio'}, 'backgroundColor': st.light_grey, 'color': st.main_blue},
+        {'if': {'column_id': 'sales'}, 'backgroundColor': st.light_grey, 'color': st.main_blue},
+        {'if': {'column_id': 'stock'}, 'backgroundColor': st.light_grey, 'color': st.main_blue},
         {'if': {'filter_query': '{ratio} <= 1', 'column_id': 'ratio'}, 'backgroundColor': st.purple, 'color': st.proj_white},
         {'if': {'column_id': 'name'}, 'textAlign': 'left'}, {'if': {'column_id': 'code'}, 'textAlign': 'center'},
         {'if': {'column_id': 'name'}, 'width': '10%'},
@@ -22,7 +24,7 @@ def style_data_conditional_formatting(sales_prediction):
                     'filter_query': "{" + col + '} <= 1',
                     'column_id': col
                 },
-                'backgroundColor': '#E8E8E8'
+                'backgroundColor': assets.styles.light_grey
             })
 
     return formatting_list
@@ -42,6 +44,7 @@ def get_main_stock_table(sales_prediction):
             columns_list.append({"name": ['', col], "id": col})
 
     table = dash.dash_table.DataTable(
+        id='stock_data_table',
         data=sales_prediction.to_dict('records'),
         columns=columns_list,
         merge_duplicate_headers=True,  # remove duplicates from top row
@@ -78,11 +81,11 @@ def stock_without_sales_table(stocks_without_sales_d):
             merge_duplicate_headers=True,  # remove duplicates from top row
             style_header={
                 'backgroundColor': 'transparent',
-                'color': st.proj_white
+                'color': st.main_blue
             },
             style_data={
                 'backgroundColor': 'transparent',
-                'color': st.light_grey
+                'color': st.main_blue
             },
             fixed_rows={'headers': True},
             style_table={'overflowX': 'auto', 'height': '500px', 'overflowY': 'auto', 'fontSize': 15},

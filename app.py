@@ -1,5 +1,6 @@
 # app.py
 import dash
+import pandas as pd
 from dash import Output, Input, dcc, html
 import dash_bootstrap_components as dbc
 import webbrowser
@@ -29,9 +30,11 @@ app.layout = html.Div([
 url = 'http://127.0.0.1:8050/'
 webbrowser.open_new(url)
 
+# initiate dataframe for data download
+dataframe_for_download = pd.DataFrame([])
 
 # CALLBACKS
-# SIDE  BAR CALLBACK
+# NAVBAR CALLBACK
 @app.callback(
     Output("page-content", "children"),
     Input("url", "pathname"))
@@ -62,7 +65,7 @@ def render_page_content(pathname):
     Output("unique_sales_refs_card", "children"),
     Output("stockout_ref_count_card", "children"),
     Output("main_stock_table", "children"),
-    # Output("download_button", "children"),
+    # Output("main_stock_button", "children"),
     Output("table_without_stock", "children"),
     Input("dropdown-button", "value")
 )
@@ -80,12 +83,30 @@ def update_name(supplier_name):
                                         stockout_ref_count)
 
     table_stock = tables.get_main_stock_table(sales_prediction)
-    # download_button = components.generate_download_data(sales_prediction)
+    # main_stock_button = components.download_button
     table_stock_out = tables.stock_without_sales_table(stocks_without_sales)
+
+    dataframe_for_download = sales_prediction
 
     return current_stocks_card, period_sales_card, stock_ratio_card,unique_stock_refs_card, \
            unique_sales_refs_card, stockout_ref_count_card, table_stock, table_stock_out
-           # download_button,\
+
+
+# # download button callback
+# @app.callback(
+#     Output('btn-nclicks-1', 'children'),
+#     Input('btn-nclicks-1', 'n_clicks'),
+# )
+# def displayClick(n_clicks):
+#     if n_clicks is None:
+#         raise PreventUpdate
+#     else:
+#         dataframe_for_download.info()
+#
+#         dataframe_for_download.to_excel()
+#
+#     print("button_clicked")
+#     return "Download"
 
 
 if __name__ == '__main__':
