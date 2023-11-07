@@ -1,6 +1,7 @@
+/**
 .nav-link {
     background-color: transparent;
-    color: #E4E5E7;
+    color: #5b688a;
     margin: 0 0 1rem 0;
 }
 
@@ -14,8 +15,9 @@
     color: #79FCF5;
     border-left: solid #79FCF5;
 }
+**/
 
 
 h1, h2, h3, h4, h5, h6 {
-    color: #9B9FAC;
+    color: #5b688a;
 }

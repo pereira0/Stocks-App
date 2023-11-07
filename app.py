@@ -18,9 +18,10 @@ app = dash.Dash(__name__, external_stylesheets=[dbc.themes.MATERIA])
 # setup layout for app
 app.layout = html.Div([
     dcc.Location(id="url"),
-    components.sidebar,
-    dbc.Container(id='page-content', style=assets.styles.CONTENT_STYLE),
-    # supplier_stock_tracker.content
+    # components.sidebar,
+    components.navbar,
+    dbc.Container(id='page-content', style=assets.styles.CONTENT_STYLE)
+
     ],
     style=assets.styles.PAGE_STYLE)
 

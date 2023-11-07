@@ -17,12 +17,11 @@ def card_styling(value_d, text_d):
     generated_card = dbc.Card(
         dbc.CardBody(
             [
-                html.P(text_d, className="card-subtitle", style={'color': styles.proj_grey}),
-                html.H1(value_d, className="card-title", style={'color': styles.light_blue}),
+                html.P(text_d, className="card-subtitle", style={'color': styles.main_blue}),
+                html.H3(value_d, className="card-title", style={'color': styles.main_blue}),
             ]
         ),
-        inverse='True',
-        style={"box-shadow": "none", "background": "transparent"}
+        style=styles.CARD_STYLE
     )
 
     return generated_card
@@ -47,7 +46,8 @@ def create_display_cards(current_stocks_d, period_sales_d, stock_ratio_d, unique
 # SIDEBAR
 sidebar = html.Div(
     [
-        html.H2("INVENTORY TRACKER", style={'color': styles.off_white}),
+        html.H3("INVENTORY TRACKER", style={'color': styles.main_blue, 'text-align': 'center'}),
+        html.Hr(style={'border-top': '5px solid ' + styles.light_grey}),
         dbc.Nav(
             [
                 dbc.NavLink("OVERVIEW", href="/overview"),
@@ -57,4 +57,22 @@ sidebar = html.Div(
         ),
     ],
     style=styles.SIDEBAR_STYLE,
+)
+
+# NAVBAR
+navbar = dbc.NavbarSimple(
+    children=[
+        dbc.Nav(
+            [
+                dbc.NavLink("OVERVIEW", href="/overview"),
+                dbc.NavLink("SUPPLIER LEVEL", href="/suppliers"),
+            ],
+        ),
+    ],
+
+    brand="INVENTORY TRACKER",
+    brand_href="/suppliers",
+    style=styles.NAVBAR_STYLE,
+    color=styles.main_blue,
+    dark=True,
 )
