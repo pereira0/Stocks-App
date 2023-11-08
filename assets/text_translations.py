@@ -1,4 +1,4 @@
-language = 'PT'
+language = 'EN'
 
 if language == 'EN':
     supplier_level = "SUPPLIER LEVEL"

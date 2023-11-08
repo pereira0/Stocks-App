@@ -4,12 +4,12 @@ from dateutil.relativedelta import relativedelta
 import local_data
 
 # # LOCAL FILE LOCATIONS
-# sales_file = pd.read_csv('data/sales_data_aaa.csv', delimiter=';')
-# stock_file = pd.read_csv('data/stock_data_aaa.csv', delimiter=';')
+sales_file = pd.read_csv('data/sales_data_aaa.csv', delimiter=';')
+stock_file = pd.read_csv('data/stock_data_aaa.csv', delimiter=';')
 
 # DATABASE DATA
-sales_file = local_data.sales_data_from_db
-stock_file = local_data.stock_query_from_db
+# sales_file = local_data.sales_data_from_db
+# stock_file = local_data.stock_query_from_db
 
 # FORMATS
 date_format = '%y/%m'  # date formatting
