@@ -1,12 +1,10 @@
 # IMPORTS
-import dash
-from dash import Output, Input, dcc
 import dash_html_components as html
+from dash import dcc
 import dash_bootstrap_components as dbc
 # get other local files
 import assets.styles as styles
 import data_cleanup
-import tables
 import variables
 import components
 import assets.text_translations as txt
@@ -44,7 +42,13 @@ content = dbc.Container([
         dbc.Row([
             dbc.Row(html.H6(txt.stocks_with_sales)),
             dbc.Row(id='main_stock_table'),
-            # dbc.Row(id='main_stock_button')
+            dbc.Row([
+                # DOWNLOAD BUTTON AND OTHER COMPONENTS
+                dcc.Store(id='session_storage', storage_type='session'),  # component to store the data
+                dbc.Button("Download excel", id="btn-download-txt", color="secondary", className="w-25 me-1"),  # physical view of the button
+                dcc.Download(id="download-dataframe-xlsx")  # component to go on callback
+            ], className='justify-content-end')
+
         ],
             style=styles.CONTAINER_CARD),
 

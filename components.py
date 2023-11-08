@@ -47,12 +47,12 @@ download_button = html.Button('Button 1', id='btn-nclicks-1', n_clicks=0),
 # SIDEBAR
 sidebar = html.Div(
     [
-        html.H3("INVENTORY TRACKER", style={'color': styles.main_blue, 'text-align': 'center'}),
+        html.H3(txt.inventory_tracker, style={'color': styles.main_blue, 'text-align': 'center'}),
         html.Hr(style={'border-top': '5px solid ' + styles.light_grey}),
         dbc.Nav(
             [
-                dbc.NavLink("OVERVIEW", href="/overview"),
-                dbc.NavLink("SUPPLIER LEVEL", href="/suppliers", active=True),
+                dbc.NavLink(txt.overview_txt, href="/overview"),
+                dbc.NavLink(txt.supplier_level, href="/suppliers", active=True),
             ],
             vertical=True,
         ),
@@ -65,13 +65,13 @@ navbar = dbc.NavbarSimple(
     children=[
         dbc.Nav(
             [
-                dbc.NavLink("OVERVIEW", href="/overview"),
-                dbc.NavLink("SUPPLIER LEVEL", href="/suppliers"),
+                dbc.NavLink(txt.overview_txt, href="/overview"),
+                dbc.NavLink(txt.supplier_level, href="/suppliers"),
             ],
         ),
     ],
 
-    brand="INVENTORY TRACKER",
+    brand=txt.inventory_tracker,
     brand_href="/suppliers",
     style=styles.NAVBAR_STYLE,
     color=styles.main_blue,

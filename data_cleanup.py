@@ -5,7 +5,9 @@ from dateutil.relativedelta import relativedelta
 
 
 # FUNCTIONS
-# cleanup sales data and FILTER SUPPLIER
+# cleanup sales data and filter supplier
+# inputs: csv sales file, start date, end date, selected supplier name, csv stocks file, date format
+# output: sales df, stocks df
 def cleanup_sales_stock_data(sales_file_d, start_date_d, end_date_d, supplier_d, stocks_file, date_format_d):
     # change type of date column
     sales_file_d['datatempo'] = pd.to_datetime(sales_file_d['datatempo']).dt.date
@@ -32,6 +34,8 @@ def cleanup_sales_stock_data(sales_file_d, start_date_d, end_date_d, supplier_d,
 
 
 # prep cleaned sales data for main table
+# input: clean "sales df" from "cleanup_sales_stock_data function"
+# output: prepped data for main table and name of aggregate column
 def prep_data_for_main_table(sales_file_d, predict_month_d):
     # only carry necessary cols
     sales_file_d = sales_file_d[['dateF', 'ref', 'design', 'qtt']]
@@ -54,6 +58,9 @@ def prep_data_for_main_table(sales_file_d, predict_month_d):
 
 
 # merge stocks with sales
+# input: "sales_data" and "name_of_col" from "prep_data_for_main_table"
+#        "stock_clean" from "cleanup_sales_stock_data function", "start_date" and "date_format" from variables
+# output: merged df of stocks and sales
 def merge_stocks_sales(sales_data_d, stock_clean_d, name_of_col_d, start_date_d, date_format_d):
     # join sales table with stocks
     sales_data_d['ref'] = sales_data_d['ref'].apply(lambda x: x.strip())
@@ -99,6 +106,9 @@ def merge_stocks_sales(sales_data_d, stock_clean_d, name_of_col_d, start_date_d,
 
 
 # create predictions
+# input: "merged_stocks_sales" from "merge_stocks_sales", date_start_txt_d,
+#        predict_month_d, date_format_d from variables
+# output: df ready to be displayed
 def sales_predictions(final_df_d, date_start_txt_d, predict_month_d, date_format_d):
     # create prediction for end of current month
     try:
@@ -166,6 +176,9 @@ def sales_predictions(final_df_d, date_start_txt_d, predict_month_d, date_format
 
 
 # get main indicators
+# input: "stock_file" and "clean_sales" from "cleanup_sales_stock_data"
+#        "display_df" from "sales_predictions"
+# output: 6 indicators for stocks cards
 def main_indicators(stock_file_d, clean_sales_df, display_df_d):
     # get total stocks
     stock_file_d['total'] = stock_file_d['stock'] * stock_file_d['unit_price']
@@ -194,6 +207,8 @@ def main_indicators(stock_file_d, clean_sales_df, display_df_d):
 
 
 # get a df with the products that didn't get any sales
+# input: clean "sales df" and "stocks df" from "cleanup_sales_stock_data function"
+# output: prepped df ready to be displayed of products in stock without sales
 def get_stocks_without_sales(sales_data_d, stock_file_d):
     stock_file_d = stock_file_d[['ref', 'design', 'stock']]
 
@@ -214,6 +229,8 @@ def get_stocks_without_sales(sales_data_d, stock_file_d):
 
 
 # get a list of all suppliers
+# input: "stocks_cleaned" from "cleanup_sales_stock_data function"
+# output: list of all suppliers to populate dropdown selector
 def get_list_of_suppliers(stock_file_d):
     list_of_suppliers_d = stock_file_d['suppliers'].unique()
     return list_of_suppliers_d.tolist()

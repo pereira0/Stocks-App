@@ -2,6 +2,8 @@ language = 'EN'
 
 if language == 'EN':
     supplier_level = "SUPPLIER LEVEL"
+    overview_txt = "OVERVIEW"
+    inventory_tracker = "INVENTORY TRACKER"
     stocks_with_sales = "Inventory with sales during period"
     inventory_no_sales = "Products in inventory without sales"
     current_stocks = "Current Stocks"
@@ -21,4 +23,6 @@ elif language == 'PT':
     number_of_sku = "Número de refs"
     unique_prod_sold = "Qtd referências vendidas"
     stockout_risk_count = "Refs em risco de falha"
+    overview_txt = "GERAL"
+    inventory_tracker = "ANÁLISE DE STOCKS"
 

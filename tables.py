@@ -54,6 +54,7 @@ def get_main_stock_table(sales_prediction):
             'overflowX': 'auto',
             'height': '500px',
             'overflowY': 'auto',
+            'padding': st.margin_val + ' 0',
             'fontSize': 15},
         style_header={
             'backgroundColor': 'transparent',
@@ -88,7 +89,12 @@ def stock_without_sales_table(stocks_without_sales_d):
                 'color': st.main_blue
             },
             fixed_rows={'headers': True},
-            style_table={'overflowX': 'auto', 'height': '500px', 'overflowY': 'auto', 'fontSize': 15},
+            style_table={
+                'overflowX': 'auto',
+                'height': '500px',
+                'overflowY': 'auto',
+                'padding': st.margin_val + ' 0',
+                'fontSize': 15},
             style_header_conditional=[
                 {'if': {'column_id': 'name'}, 'textAlign': 'left'},
                 {'if': {'column_id': 'code'}, 'textAlign': 'center'}],
