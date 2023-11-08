@@ -45,20 +45,20 @@ download_button = html.Button('Button 1', id='btn-nclicks-1', n_clicks=0),
 
 
 # SIDEBAR
-sidebar = html.Div(
-    [
-        html.H3(txt.inventory_tracker, style={'color': styles.main_blue, 'text-align': 'center'}),
-        html.Hr(style={'border-top': '5px solid ' + styles.light_grey}),
-        dbc.Nav(
-            [
-                dbc.NavLink(txt.overview_txt, href="/overview"),
-                dbc.NavLink(txt.supplier_level, href="/suppliers", active=True),
-            ],
-            vertical=True,
-        ),
-    ],
-    style=styles.SIDEBAR_STYLE,
-)
+# sidebar = html.Div(
+#     [
+#         html.H3(txt.inventory_tracker, style={'color': styles.main_blue, 'text-align': 'center'}),
+#         html.Hr(style={'border-top': '5px solid ' + styles.light_grey}),
+#         dbc.Nav(
+#             [
+#                 dbc.NavLink(txt.overview_txt, href="/overview"),
+#                 dbc.NavLink(txt.supplier_level, href="/suppliers", active=True),
+#             ],
+#             vertical=True,
+#         ),
+#     ],
+#     style=styles.SIDEBAR_STYLE,
+# )
 
 # NAVBAR
 navbar = dbc.NavbarSimple(

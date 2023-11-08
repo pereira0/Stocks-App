@@ -3,3 +3,6 @@ data/translation_doc.xlsx
 local_data.py
 assets/favicon.png
 assets/favicon.ico
+/build
+/your_app.spec
+/pyinstaller_inst.txt

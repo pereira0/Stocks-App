@@ -268,7 +268,11 @@ def get_list_of_suppliers(stock_file_d):
     stock_file_d['suppliers'] = stock_file_d['suppliers'].str.strip()
     # get list of unique values
     list_of_suppliers_d = stock_file_d['suppliers'].unique()
-    return list_of_suppliers_d.tolist()
+    # transform into list
+    list_of_suppliers_d = list_of_suppliers_d.tolist()
+    # sort alphabetically
+    list_of_suppliers_d = sorted(list_of_suppliers_d)
+    return list_of_suppliers_d
 
 
 # run all cleanup code and return final data
