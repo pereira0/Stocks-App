@@ -10,6 +10,7 @@ from json import loads
 # get other local files
 import assets.styles
 import data_cleanup
+import local_data
 import tables
 import variables
 import components
@@ -18,6 +19,7 @@ import overview_page
 
 # initialize dash app
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.MATERIA])
+app.title = local_data.app_name
 
 # setup layout for app
 app.layout = html.Div([
