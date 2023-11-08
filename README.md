@@ -2,7 +2,9 @@
 ![Static Badge](https://img.shields.io/badge/app_version-v1.0.0-gree)
 
 Browser based dashboard to track inventory.
+
 Built in Python using Dash.
+
 ---
 ## Screenshots
 
@@ -46,7 +48,8 @@ To install this project, you can use the following steps:
 ```
 pyinstaller --onefile.spec app.py
 ```
-This will create an executable file on \dist folder that you can run
+This will create an executable file on \dist folder that you can run.
+
 Sample data is already included.
 
 ---
