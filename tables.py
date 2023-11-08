@@ -50,9 +50,10 @@ def get_main_stock_table(sales_prediction):
         merge_duplicate_headers=True,  # remove duplicates from top row
         # filter_action='native',  # create filters
         fixed_rows={'headers': True},
+        page_size=30,
         style_table={
             'overflowX': 'auto',
-            'height': '500px',
+            'height': '800px',
             'overflowY': 'auto',
             'padding': st.margin_val + ' 0',
             'fontSize': 15},
@@ -68,7 +69,7 @@ def get_main_stock_table(sales_prediction):
         style_header_conditional=[
             {'if': {'column_id': 'name'}, 'textAlign': 'left'},
             {'if': {'column_id': 'code'}, 'textAlign': 'center'}],
-        page_action='none',
+        # page_action='none',
     )
 
     return table

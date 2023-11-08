@@ -31,7 +31,7 @@ def card_styling(value_d, text_d):
 # get cards for supplier stock tracker
 def create_display_cards(current_stocks_d, period_sales_d, stock_ratio_d, unique_stock_refs_d, unique_sales_refs_d, stockout_ref_count_d):
     current_stocks_card = card_styling(current_stocks_d, txt.current_stocks)
-    period_sales_card = card_styling(period_sales_d, txt.period_sales)
+    period_sales_card = card_styling(period_sales_d, txt.cogs_txt)
     stock_ratio_card = card_styling(stock_ratio_d, txt.stock_ratio)
     unique_stock_refs_card = card_styling(unique_stock_refs_d, txt.number_of_sku)
     unique_sales_refs_card = card_styling(unique_sales_refs_d, txt.unique_prod_sold)
