@@ -4,18 +4,11 @@ import pandas as pd
 from dash import Output, Input, dcc, html, ctx
 import dash_bootstrap_components as dbc
 import webbrowser
-import openpyxl
-# import json
 from json import loads
 # get other local files
 import assets.styles
-import data_cleanup
-import local_data
-import tables
-import variables
-import components
-import supplier_stock_tracker
-import overview_page
+import data_cleanup, local_data, tables, variables, components  # import app information
+import supplier_stock_tracker, overview_page  # import pages
 
 # initialize dash app
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.MATERIA])

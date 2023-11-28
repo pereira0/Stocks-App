@@ -6,3 +6,14 @@ assets/favicon.ico
 /build
 /your_app.spec
 /pyinstaller_inst.txt
+sql_queries/q_stock_movements_historical.sql
+sql_queries/q_stock_atual.sql
+sql_queries/stock_check.xlsx
+sql_queries/~$stock_check.xlsx
+sql_queries/q_stock_atual_based_on_movements.sql
+sql_queries/q_stock_atual_based_on_movements_monthly.sql
+sql_queries/q_stock_atual_based_on_movements_only_movements.sql
+sql_queries/stock_161123.xlsx
+sql_queries/stock_31122022.xlsx
+sql_queries/stock_fim_2022.xlsx
+sql_queries/~$stock_31122022.xlsx
