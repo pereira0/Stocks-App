@@ -17,3 +17,16 @@ sql_queries/stock_161123.xlsx
 sql_queries/stock_31122022.xlsx
 sql_queries/stock_fim_2022.xlsx
 sql_queries/~$stock_31122022.xlsx
+sql_queries/BACKUP q_stock_atual_based_on_movements - Cópia.sql
+sql_queries/BACKUP q_stock_atual_based_on_movements_only_movements - Cópia.sql
+historical_data
+sql_queries/q_stock_all_last_movs.sql
+historical_data
+historical_data.py
+.ipynb_checkpoints/historical data-checkpoint.ipynb
+__pycache__/historical_data.cpython-310.pyc
+historical data.ipynb
+sql_queries/BACKUP q_stock_atual_based_on_movements.sql
+sql_queries/BACKUP q_stock_atual_based_on_movements_only_movements.sql
+sql_queries/notebook-cleanup.ipynb
+sql_queries/Python Check.ipynb
